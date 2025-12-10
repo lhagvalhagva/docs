@@ -14,30 +14,6 @@
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
             "group": "User Guide",
             "pages": [
               "user-guide/introduction",
@@ -47,14 +23,6 @@
               "user-guide/leave-requests",
               "user-guide/product-expenses",
               "user-guide/purchase-requests"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
             ]
           }
         ]
@@ -130,9 +98,9 @@
           "icon": "book-open-cover"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "MW Portal",
+          "href": "http://122.201.25.135:3000",
+          "icon": "link"
         }
       ]
     }
