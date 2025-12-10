@@ -1,0 +1,102 @@
+---
+title: 'Create Time Request'
+api: 'POST /api/hr-leave/time-request'
+description: 'Шинэ цагийн хүсэлт үүсгэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/hr-leave/time-request' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: session_id=your_session_id' \
+  -d '{
+    "leaveTypeId": 1,
+    "leaveFlowId": 2,
+    "dateStart": "2024-01-20",
+    "dateEnd": "2024-01-22",
+    "timeFrom": "09:00",
+    "timeTo": "18:00",
+    "description": "Гэр бүлийн асуудал"
+  }'
+```
+</RequestExample>
+
+## Request Body
+
+<ParamField body="leaveTypeId" type="integer" required>
+Чөлөөний төрлийн ID
+</ParamField>
+
+<ParamField body="leaveFlowId" type="integer" required>
+Flow-ийн ID
+</ParamField>
+
+<ParamField body="dateStart" type="string" required>
+Эхлэх огноо. Формат: `YYYY-MM-DD`
+</ParamField>
+
+<ParamField body="dateEnd" type="string" required>
+Дуусах огноо. Формат: `YYYY-MM-DD`
+</ParamField>
+
+<ParamField body="timeFrom" type="string">
+Эхлэх цаг. Формат: `HH:MM` (сонголттой)
+</ParamField>
+
+<ParamField body="timeTo" type="string">
+Дуусах цаг. Формат: `HH:MM` (сонголттой)
+</ParamField>
+
+<ParamField body="description" type="string" required>
+Тайлбар
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": {
+    "id": 123
+  },
+  "message": "Цагийн хүсэлт амжилттай үүсгэгдлээ"
+}
+```
+
+```json Error Response
+{
+  "success": false,
+  "message": "Шаардлагатай утгууд дутуу байна (leaveTypeId, leaveFlowId, dateFrom, dateTo, description)!"
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="object">
+<Expandable title="Data Fields">
+  <ResponseField name="id" type="integer" required>
+  Үүсгэсэн хүсэлтийн ID
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+Хариуны мэдээлэл
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 400 | Шаардлагатай утгууд дутуу |
+| 404 | Ажилтан олдсонгүй |
+| 500 | Серверийн алдаа |

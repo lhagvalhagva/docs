@@ -1,0 +1,118 @@
+---
+title: 'Get Employee Profile'
+api: 'GET /api/auth/employee-profile'
+description: 'Ажилтны профайл мэдээлэл авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/auth/employee-profile' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Authentication
+
+Энэ endpoint нь Odoo session-based authentication ашигладаг. Хэрэглэгч нь Odoo системд нэвтэрсэн байх ёстой.
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "status": "success",
+  "data": {
+    "id": 1,
+    "name": "Бат",
+    "last_name": "Дорж",
+    "display_name": "Бат Дорж",
+    "department_id": [5, "Худалдаа"],
+    "job_title": "Программист",
+    "work_phone": "+976 99112233",
+    "work_email": "bat@example.com",
+    "image_1920": "base64_encoded_image_string",
+    "work_location_id": [3, "Төв оффис"],
+    "live_address": "Улаанбаатар хот",
+    "engagement_in_company": "2024-01-15"
+  }
+}
+```
+
+```json Error Response
+{
+  "status": "error",
+  "message": "Session ID required"
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="status" type="string" required>
+Хариуны статус: `success` эсвэл `error`
+</ResponseField>
+
+<ResponseField name="data" type="object">
+Ажилтны мэдээлэл
+
+<Expandable title="Employee Fields">
+  <ResponseField name="id" type="integer" required>
+  Ажилтны ID
+  </ResponseField>
+
+  <ResponseField name="name" type="string">
+  Нэр
+  </ResponseField>
+
+  <ResponseField name="last_name" type="string">
+  Овог
+  </ResponseField>
+
+  <ResponseField name="display_name" type="string">
+  Бүтэн нэр
+  </ResponseField>
+
+  <ResponseField name="department_id" type="array">
+  Хэлтэс [id, name]
+  </ResponseField>
+
+  <ResponseField name="job_title" type="string">
+  Албан тушаал
+  </ResponseField>
+
+  <ResponseField name="work_phone" type="string">
+  Ажлын утас
+  </ResponseField>
+
+  <ResponseField name="work_email" type="string">
+  Ажлын имэйл
+  </ResponseField>
+
+  <ResponseField name="image_1920" type="string">
+  Профайл зураг (base64 формат)
+  </ResponseField>
+
+  <ResponseField name="work_location_id" type="array">
+  Ажлын байршил [id, name]
+  </ResponseField>
+
+  <ResponseField name="live_address" type="string">
+  Амьдардаг хаяг
+  </ResponseField>
+
+  <ResponseField name="engagement_in_company" type="string">
+  Ажилд орсон огноо (ISO формат: YYYY-MM-DD)
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 400 | Session ID шаардлагатай |
+| 404 | Ажилтан олдсонгүй |
+| 500 | Серверийн алдаа |

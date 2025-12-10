@@ -1,0 +1,78 @@
+---
+title: 'Create Attendance'
+api: 'POST /api/attendance/create'
+description: 'Шинэ ирц бүртгэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/attendance/create' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: session_id=your_session_id' \
+  -d '{
+    "attendance_time": "2024-01-15 09:00:00"
+  }'
+```
+</RequestExample>
+
+## Authentication
+
+Энэ endpoint нь Odoo session-based authentication ашигладаг.
+
+## Request Body
+
+<ParamField body="attendance_time" type="string" required>
+Ирцийн цаг. Формат: `YYYY-MM-DD HH:MM:SS`
+
+Жишээ: `2024-01-15 09:00:00`
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": {
+    "id": 123
+  },
+  "message": "Ирц амжилттай үүсгэлээ"
+}
+```
+
+```json Error Response
+{
+  "success": false,
+  "message": "attendance_time шаардлагатай"
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="object">
+<Expandable title="Data Fields">
+  <ResponseField name="id" type="integer" required>
+  Үүсгэсэн ирцийн ID
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+<ResponseField name="message" type="string">
+Хариуны мэдээлэл
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 400 | attendance_time шаардлагатай |
+| 404 | Ажилтан олдсонгүй |
+| 500 | Серверийн алдаа |

@@ -1,0 +1,39 @@
+---
+title: 'Product Expense Action Next'
+api: 'POST /api/product-expense/{expense_id}/action-next'
+description: 'Бараа материалын шаардлагыг дараагийн шат руу шилжүүлэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/product-expense/123/action-next' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Path Parameters
+
+<ParamField path="expense_id" type="integer" required>
+Бараа материалын шаардлагын ID
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "message": "Бараа материалын шаардах амжилттай үргэлжлүүллээ"
+}
+```
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 404 | Бараа материалын шаардах олдсонгүй |
+| 500 | Серверийн алдаа |

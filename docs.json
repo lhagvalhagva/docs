@@ -38,6 +38,18 @@
             ]
           },
           {
+            "group": "User Guide",
+            "pages": [
+              "user-guide/introduction",
+              "user-guide/getting-started",
+              "user-guide/employee-profile",
+              "user-guide/attendance",
+              "user-guide/leave-requests",
+              "user-guide/product-expenses",
+              "user-guide/purchase-requests"
+            ]
+          },
+          {
             "group": "AI tools",
             "pages": [
               "ai-tools/cursor",
@@ -51,18 +63,60 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Introduction",
             "pages": [
               "api-reference/introduction"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Database",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "api-reference/database/list"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "api-reference/auth/authenticate",
+              "api-reference/auth/employee-profile"
+            ]
+          },
+          {
+            "group": "Attendance",
+            "pages": [
+              "api-reference/attendance/list",
+              "api-reference/attendance/create"
+            ]
+          },
+          {
+            "group": "HR Leave",
+            "pages": [
+              "api-reference/hr-leave/leave-types",
+              "api-reference/hr-leave/leave-flow",
+              "api-reference/hr-leave/time-requests",
+              "api-reference/hr-leave/create-time-request"
+            ]
+          },
+          {
+            "group": "Product Expense",
+            "pages": [
+              "api-reference/product-expense/list",
+              "api-reference/product-expense/create",
+              "api-reference/product-expense/get-by-id",
+              "api-reference/product-expense/action-next",
+              "api-reference/product-expense/action-cancel",
+              "api-reference/product-expense/helpers"
+            ]
+          },
+          {
+            "group": "Purchase Request",
+            "pages": [
+              "api-reference/purchase-request/list",
+              "api-reference/purchase-request/create",
+              "api-reference/purchase-request/get-by-id",
+              "api-reference/purchase-request/action-next",
+              "api-reference/purchase-request/action-cancel",
+              "api-reference/purchase-request/helpers"
             ]
           }
         ]

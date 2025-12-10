@@ -1,0 +1,99 @@
+---
+title: 'Create Product Expense'
+api: 'POST /api/product-expense/create'
+description: 'Шинэ бараа материалын шаардах үүсгэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/product-expense/create' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: session_id=your_session_id' \
+  -d '{
+    "branchId": 1,
+    "warehouseId": 2,
+    "transactionValueId": 3,
+    "flowId": 4,
+    "description": "Тайлбар",
+    "dateRequired": "2024-01-20",
+    "productExpenseLines": [
+      {
+        "productId": 10,
+        "qty": 5.0
+      }
+    ]
+  }'
+```
+</RequestExample>
+
+## Request Body
+
+<ParamField body="branchId" type="integer" required>
+Салбарын ID
+</ParamField>
+
+<ParamField body="warehouseId" type="integer" required>
+Агуулахын ID
+</ParamField>
+
+<ParamField body="transactionValueId" type="integer" required>
+Гүйлгээний утгын ID. Агуулахтай таарах ёстой.
+</ParamField>
+
+<ParamField body="flowId" type="integer" required>
+Flow-ийн ID
+</ParamField>
+
+<ParamField body="description" type="string" required>
+Тайлбар
+</ParamField>
+
+<ParamField body="dateRequired" type="string" required>
+Шаардлагатай огноо. Формат: `YYYY-MM-DD`
+</ParamField>
+
+<ParamField body="productExpenseLines" type="array">
+Бараа материалын мөрүүд (сонголттой)
+
+<Expandable title="Product Expense Line">
+  <ParamField body="productId" type="integer" required>
+  Бүтээгдэхүүний ID
+  </ParamField>
+
+  <ParamField body="qty" type="float" required>
+  Тоо хэмжээ
+  </ParamField>
+</Expandable>
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": {
+    "id": 123
+  },
+  "message": "Бараа материалын шаардах амжилттай үүсгэгдлээ id = 123"
+}
+```
+
+```json Error Response
+{
+  "success": false,
+  "message": "Шаардлагатай утгууд дутуу байна!"
+}
+```
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 400 | Шаардлагатай утгууд дутуу эсвэл гүйлгээний утга агуулахтай таарахгүй |
+| 404 | Ажилтны хэлтэс олдсонгүй |
+| 500 | Серверийн алдаа |

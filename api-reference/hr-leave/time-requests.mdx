@@ -1,0 +1,105 @@
+---
+title: 'Get Time Requests'
+api: 'GET /api/hr-leave/time-requests'
+description: 'Ажилтны цагийн хүсэлтүүдийн жагсаалт авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/hr-leave/time-requests' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "employeeId": 5,
+      "leaveTypeId": 1,
+      "leaveTypeName": "Энгийн чөлөө",
+      "leaveFlowId": 2,
+      "leaveFlowName": "Энгийн чөлөөний flow",
+      "dateFrom": "2024-01-20",
+      "dateTo": "2024-01-22",
+      "timeFrom": "09:00",
+      "timeTo": "18:00",
+      "description": "Гэр бүлийн асуудал",
+      "stateType": "draft",
+      "createDate": "2024-01-15 10:30:00"
+    }
+  ]
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="array">
+Цагийн хүсэлтүүдийн жагсаалт
+
+<Expandable title="Time Request">
+  <ResponseField name="id" type="integer" required>
+  Хүсэлтийн ID
+  </ResponseField>
+
+  <ResponseField name="employeeId" type="integer">
+  Ажилтны ID
+  </ResponseField>
+
+  <ResponseField name="leaveTypeId" type="integer">
+  Чөлөөний төрлийн ID
+  </ResponseField>
+
+  <ResponseField name="leaveTypeName" type="string">
+  Чөлөөний төрлийн нэр
+  </ResponseField>
+
+  <ResponseField name="leaveFlowId" type="integer">
+  Flow-ийн ID
+  </ResponseField>
+
+  <ResponseField name="leaveFlowName" type="string">
+  Flow-ийн нэр
+  </ResponseField>
+
+  <ResponseField name="dateFrom" type="string">
+  Эхлэх огноо (YYYY-MM-DD)
+  </ResponseField>
+
+  <ResponseField name="dateTo" type="string">
+  Дуусах огноо (YYYY-MM-DD)
+  </ResponseField>
+
+  <ResponseField name="timeFrom" type="string">
+  Эхлэх цаг (HH:MM)
+  </ResponseField>
+
+  <ResponseField name="timeTo" type="string">
+  Дуусах цаг (HH:MM)
+  </ResponseField>
+
+  <ResponseField name="description" type="string">
+  Тайлбар
+  </ResponseField>
+
+  <ResponseField name="stateType" type="string">
+  Төлөв (draft, submitted, approved, rejected)
+  </ResponseField>
+
+  <ResponseField name="createDate" type="string">
+  Үүсгэсэн огноо (YYYY-MM-DD HH:MM:SS)
+  </ResponseField>
+</Expandable>
+</ResponseField>

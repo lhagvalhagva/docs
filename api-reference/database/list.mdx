@@ -1,0 +1,56 @@
+---
+title: 'List Databases'
+api: 'POST /web/database/list'
+description: 'Сервер дээрх бүх database-уудын жагсаалтыг авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/web/database/list' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
+</RequestExample>
+
+## Request Body
+
+Энэ endpoint-д хүсэлтийн body шаардлагагүй, хоосон JSON `{}` илгээнэ.
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "result": [
+    "database_name_1",
+    "database_name_2",
+    "database_name_3"
+  ]
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="jsonrpc" type="string" required>
+JSON-RPC хувилбар (2.0)
+</ResponseField>
+
+<ResponseField name="id" type="null">
+Хүсэлтийн ID (ихэвчлэн null)
+</ResponseField>
+
+<ResponseField name="result" type="array" required>
+Database-уудын нэрсийн жагсаалт
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 500 | Серверийн алдаа |

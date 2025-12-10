@@ -1,0 +1,104 @@
+---
+title: 'Create Purchase Request'
+api: 'POST /api/purchase-request/create'
+description: 'Шинэ худалдан авалтын хүсэлт үүсгэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/purchase-request/create' \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: session_id=your_session_id' \
+  -d '{
+    "branchId": 1,
+    "date": "2024-01-15",
+    "desc": "Худалдан авалтын тайлбар",
+    "warehouseId": 2,
+    "priority": "1",
+    "flowId": 4,
+    "lineIds": [
+      {
+        "productId": 20,
+        "qty": 10.0,
+        "desc": "Мөрийн тайлбар"
+      }
+    ]
+  }'
+```
+</RequestExample>
+
+## Request Body
+
+<ParamField body="branchId" type="integer" required>
+Салбарын ID
+</ParamField>
+
+<ParamField body="date" type="string" required>
+Огноо. Формат: `YYYY-MM-DD`
+</ParamField>
+
+<ParamField body="desc" type="string" required>
+Хүсэлтийн тайлбар (хоосон биш)
+</ParamField>
+
+<ParamField body="warehouseId" type="integer" required>
+Агуулахын ID
+</ParamField>
+
+<ParamField body="priority" type="string" required>
+Эрэмбийн түвшин: "1", "2", эсвэл "3"
+</ParamField>
+
+<ParamField body="flowId" type="integer" required>
+Flow-ийн ID
+</ParamField>
+
+<ParamField body="lineIds" type="array">
+Хүсэлтийн мөрүүд (сонголттой)
+
+<Expandable title="Purchase Request Line">
+  <ParamField body="productId" type="integer" required>
+  Бүтээгдэхүүний ID
+  </ParamField>
+
+  <ParamField body="qty" type="float" required>
+  Тоо хэмжээ
+  </ParamField>
+
+  <ParamField body="desc" type="string">
+  Мөрийн тайлбар (сонголттой)
+  </ParamField>
+</Expandable>
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": {
+    "id": 123
+  },
+  "message": "Худалдан авалтын хүсэлт амжилттай үүсгэгдлээ id = 123"
+}
+```
+
+```json Error Response
+{
+  "success": false,
+  "message": "Шаардлагатай утгууд дутуу байна!"
+}
+```
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 400 | Шаардлагатай утгууд дутуу эсвэл буруу утга |
+| 404 | Хэрэглэгчийн харилцагч олдсонгүй |
+| 500 | Серверийн алдаа |

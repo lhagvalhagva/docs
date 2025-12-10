@@ -1,0 +1,64 @@
+---
+title: 'Get Purchase Request by ID'
+api: 'GET /api/purchase-request/{request_id}'
+description: 'Тодорхой худалдан авалтын хүсэлтийг ID-аар авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/purchase-request/123' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Path Parameters
+
+<ParamField path="request_id" type="integer" required>
+Худалдан авалтын хүсэлтийн ID
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": {
+    "id": 123,
+    "name": "PR/2024/0001",
+    "branchId": 1,
+    "branchName": "Төв салбар",
+    "date": "2024-01-15",
+    "partnerId": 10,
+    "partnerName": "Харилцагч",
+    "departmentId": 5,
+    "departmentName": "Худалдаа",
+    "lineIds": [
+      {
+        "productId": 20,
+        "productName": "Бүтээгдэхүүн 1",
+        "qty": 10.0,
+        "desc": "Тайлбар"
+      }
+    ],
+    "desc": "Худалдан авалтын тайлбар",
+    "warehouseId": 2,
+    "warehouseName": "Төв агуулах",
+    "priority": "1",
+    "flowId": 4,
+    "flowName": "Худалдан авалтын flow",
+    "flowLineId": 6
+  }
+}
+```
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 404 | Худалдан авалтын хүсэлт олдсонгүй |
+| 500 | Серверийн алдаа |

@@ -1,0 +1,75 @@
+---
+title: 'Product Expense Helpers'
+description: 'Бараа материалын шаардлагын туслах endpoint-үүд'
+---
+
+## Branches
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense/branches' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+Салбаруудын жагсаалт авах.
+
+## Warehouses
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense/warehouses' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+Агуулахын жагсаалт авах.
+
+## Transaction Values
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense/transaction-values?warehouse_id=2' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+Гүйлгээний утгуудын жагсаалт авах. `warehouse_id` query parameter нь сонголттой.
+
+<ParamField query="warehouse_id" type="integer">
+Агуулахын ID (сонголттой)
+</ParamField>
+
+## Flows
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense/flows' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+Flow-уудын жагсаалт авах.
+
+## Products
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense/products?search=бүтээгдэхүүн&limit=20&offset=0' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+Бүтээгдэхүүнүүдийн жагсаалт авах.
+
+<ParamField query="search" type="string">
+Хайлтын үг (сонголттой). Бүтээгдэхүүний код эсвэл нэрээр хайна.
+</ParamField>
+
+<ParamField query="limit" type="integer" default="20">
+Харуулах мөрүүдийн тоо (сонголттой)
+</ParamField>
+
+<ParamField query="offset" type="integer" default="0">
+Эхлэх байрлал (сонголттой)
+</ParamField>

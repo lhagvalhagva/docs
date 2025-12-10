@@ -1,0 +1,79 @@
+---
+title: 'Get Attendance List'
+api: 'GET /api/attendance/list'
+description: 'Ажилтны ирцийн жагсаалт авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/attendance/list' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Authentication
+
+Энэ endpoint нь Odoo session-based authentication ашигладаг.
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "attendance_time": "2024-01-15 09:00:00",
+      "date": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "attendance_time": "2024-01-14 08:45:00",
+      "date": "2024-01-14"
+    }
+  ]
+}
+```
+
+```json Error Response
+{
+  "success": false,
+  "message": "Ажилтан олдсонгүй"
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="array">
+Ирцийн жагсаалт
+
+<Expandable title="Attendance Item">
+  <ResponseField name="id" type="integer" required>
+  Ирцийн ID
+  </ResponseField>
+
+  <ResponseField name="attendance_time" type="string">
+  Ирцийн цаг (YYYY-MM-DD HH:MM:SS формат)
+  </ResponseField>
+
+  <ResponseField name="date" type="string">
+  Огноо (YYYY-MM-DD формат)
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 404 | Ажилтан олдсонгүй |
+| 500 | Серверийн алдаа |

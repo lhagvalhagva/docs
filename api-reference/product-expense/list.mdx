@@ -1,0 +1,140 @@
+---
+title: 'Get Product Expenses'
+api: 'GET /api/product-expense'
+description: 'Бараа материалын шаардлагын жагсаалт авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/product-expense' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "EXP/2024/0001",
+      "branchId": 1,
+      "branchName": "Төв салбар",
+      "warehouseId": 2,
+      "warehouseName": "Төв агуулах",
+      "transactionValueId": 3,
+      "transactionValueName": "Гүйлгээний утга",
+      "flowId": 4,
+      "flowName": "Бараа материалын flow",
+      "description": "Тайлбар",
+      "dateRequired": "2024-01-20",
+      "departmentId": 5,
+      "departmentName": "Худалдаа",
+      "flowLineId": 6,
+      "productExpenseLines": [
+        {
+          "productId": 10,
+          "productName": "Бүтээгдэхүүн 1",
+          "qty": 5.0
+        }
+      ]
+    }
+  ]
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="array">
+Бараа материалын шаардлагын жагсаалт
+
+<Expandable title="Product Expense">
+  <ResponseField name="id" type="integer" required>
+  Шаардлагын ID
+  </ResponseField>
+
+  <ResponseField name="name" type="string">
+  Шаардлагын дугаар
+  </ResponseField>
+
+  <ResponseField name="branchId" type="integer">
+  Салбарын ID
+  </ResponseField>
+
+  <ResponseField name="branchName" type="string">
+  Салбарын нэр
+  </ResponseField>
+
+  <ResponseField name="warehouseId" type="integer">
+  Агуулахын ID
+  </ResponseField>
+
+  <ResponseField name="warehouseName" type="string">
+  Агуулахын нэр
+  </ResponseField>
+
+  <ResponseField name="transactionValueId" type="integer">
+  Гүйлгээний утгын ID
+  </ResponseField>
+
+  <ResponseField name="transactionValueName" type="string">
+  Гүйлгээний утгын нэр
+  </ResponseField>
+
+  <ResponseField name="flowId" type="integer">
+  Flow-ийн ID
+  </ResponseField>
+
+  <ResponseField name="flowName" type="string">
+  Flow-ийн нэр
+  </ResponseField>
+
+  <ResponseField name="description" type="string">
+  Тайлбар
+  </ResponseField>
+
+  <ResponseField name="dateRequired" type="string">
+  Шаардлагатай огноо (YYYY-MM-DD)
+  </ResponseField>
+
+  <ResponseField name="departmentId" type="integer">
+  Хэлтсийн ID
+  </ResponseField>
+
+  <ResponseField name="departmentName" type="string">
+  Хэлтсийн нэр
+  </ResponseField>
+
+  <ResponseField name="flowLineId" type="integer">
+  Flow line-ийн ID
+  </ResponseField>
+
+  <ResponseField name="productExpenseLines" type="array">
+  Бараа материалын мөрүүд
+
+  <Expandable title="Product Expense Line">
+    <ResponseField name="productId" type="integer">
+    Бүтээгдэхүүний ID
+    </ResponseField>
+
+    <ResponseField name="productName" type="string">
+    Бүтээгдэхүүний нэр
+    </ResponseField>
+
+    <ResponseField name="qty" type="float">
+    Тоо хэмжээ
+    </ResponseField>
+  </Expandable>
+  </ResponseField>
+</Expandable>
+</ResponseField>

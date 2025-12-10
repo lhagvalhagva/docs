@@ -1,0 +1,39 @@
+---
+title: 'Purchase Request Action Next'
+api: 'POST /api/purchase-request/{request_id}/action-next'
+description: 'Худалдан авалтын хүсэлтийг дараагийн шат руу шилжүүлэх'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/api/purchase-request/123/action-next' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Path Parameters
+
+<ParamField path="request_id" type="integer" required>
+Худалдан авалтын хүсэлтийн ID
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "message": "Худалдан авалтын хүсэлт амжилттай үйлдлээ"
+}
+```
+</ResponseExample>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай |
+| 404 | Худалдан авалтын хүсэлт олдсонгүй |
+| 500 | Серверийн алдаа |

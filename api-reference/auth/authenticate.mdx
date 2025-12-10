@@ -1,0 +1,183 @@
+---
+title: 'Authenticate Session'
+api: 'POST /web/session/authenticate'
+description: 'Odoo системд нэвтрэх (authenticate хийх)'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X POST 'https://your-odoo-instance.com/web/session/authenticate' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "params": {
+      "db": "your_database_name",
+      "login": "your_username",
+      "password": "your_password"
+    }
+  }'
+```
+</RequestExample>
+
+## Request Body
+
+<ParamField body="jsonrpc" type="string" required>
+JSON-RPC хувилбар. Үргэлж `"2.0"` байна.
+</ParamField>
+
+<ParamField body="params" type="object" required>
+Параметрүүдийг агуулсан объект.
+
+<Expandable title="Params Fields">
+  <ParamField body="db" type="string" required>
+  Database-ийн нэр
+  </ParamField>
+
+  <ParamField body="login" type="string" required>
+  Хэрэглэгчийн нэвтрэх нэр (username/email)
+  </ParamField>
+
+  <ParamField body="password" type="string" required>
+  Хэрэглэгчийн нууц үг
+  </ParamField>
+</Expandable>
+</ParamField>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "result": {
+    "uid": 1,
+    "is_system": true,
+    "is_admin": true,
+    "user_context": {
+      "lang": "en_US",
+      "tz": "Asia/Ulaanbaatar",
+      "uid": 1
+    },
+    "web_base_url": "https://your-odoo-instance.com",
+    "company_id": 1,
+    "company_ids": [1],
+    "currencies": {
+      "1": {
+        "symbol": "₮",
+        "position": "after",
+        "digits": [69, 2]
+      }
+    },
+    "partner_display_name": "Админ",
+    "server_version": "16.0",
+    "server_version_info": [
+      16,
+      0,
+      0,
+      "final",
+      0,
+      "",
+      false
+    ],
+    "session_id": "your_session_id",
+    "username": "admin",
+    "display_name": "Админ"
+  }
+}
+```
+
+```json Error Response
+{
+  "jsonrpc": "2.0",
+  "id": null,
+  "error": {
+    "code": 200,
+    "message": "Odoo Server Error",
+    "data": {
+      "name": "odoo.exceptions.AccessDenied",
+      "debug": "...",
+      "message": "Wrong login/password",
+      "arguments": [
+        "Wrong login/password"
+      ],
+      "exception_type": "access_denied"
+    }
+  }
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="jsonrpc" type="string" required>
+JSON-RPC хувилбар (2.0)
+</ResponseField>
+
+<ResponseField name="id" type="null">
+Хүсэлтийн ID (ихэвчлэн null)
+</ResponseField>
+
+<ResponseField name="result" type="object">
+Амжилттай authentication-ийн үр дүн
+
+<Expandable title="Result Fields">
+  <ResponseField name="uid" type="integer" required>
+  Хэрэглэгчийн ID
+  </ResponseField>
+
+  <ResponseField name="session_id" type="string" required>
+  Үүсгэсэн session ID
+  </ResponseField>
+
+  <ResponseField name="username" type="string">
+  Нэвтэрсэн хэрэглэгчийн нэр
+  </ResponseField>
+
+  <ResponseField name="display_name" type="string">
+  Хэрэглэгчийн дэлгэцэнд харагдах нэр
+  </ResponseField>
+
+  <ResponseField name="web_base_url" type="string">
+  Odoo веб-ийн үндсэн URL
+  </ResponseField>
+
+  <ResponseField name="company_id" type="integer">
+  Үндсэн компанийн ID
+  </ResponseField>
+
+  <ResponseField name="company_ids" type="array">
+  Хэрэглэгчийн хандах боломжтой компанийн ID-ууд
+  </ResponseField>
+
+  <ResponseField name="user_context" type="object">
+  Хэрэглэгчийн контекст (хэл, цагийн бүс, UID)
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+<ResponseField name="error" type="object">
+Алдааны мэдээлэл (зөвхөн алдаа гарсан үед)
+
+<Expandable title="Error Fields">
+  <ResponseField name="code" type="integer">
+  Алдааны код
+  </ResponseField>
+
+  <ResponseField name="message" type="string">
+  Алдааны мессеж
+  </ResponseField>
+
+  <ResponseField name="data" type="object">
+  Алдааны дэлгэрэнгүй мэдээлэл
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+## Status Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Амжилттай эсвэл Odoo Server Error |

@@ -1,33 +1,61 @@
 ---
 title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+description: 'MW Portal Backend API Reference'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Тавтай морил
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+MW Portal Backend API нь Odoo 18 системтэй холбогдох REST API-уудыг өгдөг. Энэ API нь portal хэрэглэгчдэд зориулсан бөгөөд ажилтны профайл, ирц, чөлөөний хүсэлт, бараа материалын шаардах, худалдан авалтын хүсэлт зэрэг үйлчилгээнүүдийг агуулдаг.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+Бүх API endpoint-үүд нь Odoo session-based authentication ашигладаг. Хэрэглэгч нь Odoo системд нэвтэрсэн байх ёстой бөгөөд session cookie эсвэл session ID-г ашиглана.
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+<Warning>
+Бүх endpoint-үүд `auth='user'` тохиргоотой бөгөөд нэвтэрсэн хэрэглэгч шаардлагатай.
+</Warning>
+
+## Response Format
+
+Бүх API хариу нь дараах форматтай:
+
+<CodeGroup>
+```json Success Response
+{
+  "success": true,
+  "data": {...},
+  "message": "Амжилттай"
+}
 ```
+
+```json Error Response
+{
+  "success": false,
+  "message": "Алдааны мэдээлэл"
+}
+```
+</CodeGroup>
+
+## API Categories
+
+<CardGroup cols={2}>
+<Card title="Authentication" icon="key" href="/api-reference/auth/employee-profile">
+  Ажилтны профайл мэдээлэл авах
+</Card>
+
+<Card title="Attendance" icon="clock" href="/api-reference/attendance/list">
+  Ирц бүртгэх, жагсаалт авах
+</Card>
+
+<Card title="HR Leave" icon="calendar" href="/api-reference/hr-leave/time-requests">
+  Чөлөөний хүсэлт үүсгэх, удирдах
+</Card>
+
+<Card title="Product Expense" icon="box" href="/api-reference/product-expense">
+  Бараа материалын шаардах үүсгэх, удирдах
+</Card>
+
+<Card title="Purchase Request" icon="shopping-cart" href="/api-reference/purchase-request">
+  Худалдан авалтын хүсэлт үүсгэх, удирдах
+</Card>
+</CardGroup>

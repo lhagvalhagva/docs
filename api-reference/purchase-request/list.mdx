@@ -1,0 +1,150 @@
+---
+title: 'Get Purchase Requests'
+api: 'GET /api/purchase-request'
+description: 'Худалдан авалтын хүсэлтүүдийн жагсаалт авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/purchase-request' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "PR/2024/0001",
+      "branchId": 1,
+      "branchName": "Төв салбар",
+      "date": "2024-01-15",
+      "partnerId": 10,
+      "partnerName": "Харилцагч",
+      "departmentId": 5,
+      "departmentName": "Худалдаа",
+      "lineIds": [
+        {
+          "productId": 20,
+          "productName": "Бүтээгдэхүүн 1",
+          "qty": 10.0,
+          "desc": "Тайлбар"
+        }
+      ],
+      "desc": "Худалдан авалтын тайлбар",
+      "warehouseId": 2,
+      "warehouseName": "Төв агуулах",
+      "priority": "1",
+      "flowId": 4,
+      "flowName": "Худалдан авалтын flow",
+      "flowLineId": 6
+    }
+  ]
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="array">
+Худалдан авалтын хүсэлтүүдийн жагсаалт
+
+<Expandable title="Purchase Request">
+  <ResponseField name="id" type="integer" required>
+  Хүсэлтийн ID
+  </ResponseField>
+
+  <ResponseField name="name" type="string">
+  Хүсэлтийн дугаар
+  </ResponseField>
+
+  <ResponseField name="branchId" type="integer">
+  Салбарын ID
+  </ResponseField>
+
+  <ResponseField name="branchName" type="string">
+  Салбарын нэр
+  </ResponseField>
+
+  <ResponseField name="date" type="string">
+  Огноо (YYYY-MM-DD)
+  </ResponseField>
+
+  <ResponseField name="partnerId" type="integer">
+  Харилцагчийн ID
+  </ResponseField>
+
+  <ResponseField name="partnerName" type="string">
+  Харилцагчийн нэр
+  </ResponseField>
+
+  <ResponseField name="departmentId" type="integer">
+  Хэлтсийн ID
+  </ResponseField>
+
+  <ResponseField name="departmentName" type="string">
+  Хэлтсийн нэр
+  </ResponseField>
+
+  <ResponseField name="lineIds" type="array">
+  Хүсэлтийн мөрүүд
+
+  <Expandable title="Purchase Request Line">
+    <ResponseField name="productId" type="integer">
+    Бүтээгдэхүүний ID
+    </ResponseField>
+
+    <ResponseField name="productName" type="string">
+    Бүтээгдэхүүний нэр
+    </ResponseField>
+
+    <ResponseField name="qty" type="float">
+    Тоо хэмжээ
+    </ResponseField>
+
+    <ResponseField name="desc" type="string">
+    Тайлбар
+    </ResponseField>
+  </Expandable>
+  </ResponseField>
+
+  <ResponseField name="desc" type="string">
+  Хүсэлтийн тайлбар
+  </ResponseField>
+
+  <ResponseField name="warehouseId" type="integer">
+  Агуулахын ID
+  </ResponseField>
+
+  <ResponseField name="warehouseName" type="string">
+  Агуулахын нэр
+  </ResponseField>
+
+  <ResponseField name="priority" type="string">
+  Эрэмбийн түвшин (1, 2, 3)
+  </ResponseField>
+
+  <ResponseField name="flowId" type="integer">
+  Flow-ийн ID
+  </ResponseField>
+
+  <ResponseField name="flowName" type="string">
+  Flow-ийн нэр
+  </ResponseField>
+
+  <ResponseField name="flowLineId" type="integer">
+  Flow line-ийн ID
+  </ResponseField>
+</Expandable>
+</ResponseField>

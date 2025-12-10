@@ -1,0 +1,50 @@
+---
+title: 'Get Leave Flow'
+api: 'GET /api/hr-leave/leave-flow'
+description: 'Чөлөөний flow-уудын жагсаалт авах'
+---
+
+## Endpoint
+
+<RequestExample>
+```bash cURL
+curl -X GET 'https://your-odoo-instance.com/api/hr-leave/leave-flow' \
+  -H 'Cookie: session_id=your_session_id'
+```
+</RequestExample>
+
+## Response
+
+<ResponseExample>
+```json Success Response
+{
+  "success": true,
+  "data": [
+    {
+      "id": 1,
+      "name": "Энгийн чөлөөний flow"
+    }
+  ]
+}
+```
+</ResponseExample>
+
+## Response Fields
+
+<ResponseField name="success" type="boolean" required>
+Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="data" type="array">
+Flow-уудын жагсаалт
+
+<Expandable title="Flow">
+  <ResponseField name="id" type="integer" required>
+  Flow-ийн ID
+  </ResponseField>
+
+  <ResponseField name="name" type="string" required>
+  Flow-ийн нэр
+  </ResponseField>
+</Expandable>
+</ResponseField>
