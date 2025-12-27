@@ -88,6 +88,24 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "Chainway API",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "api-reference/chainway/introduction"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/chainway/rfid-write",
+              "api-reference/chainway/label-print"
+            ]
+          }
+        ]
       }
     ],
     "global": {

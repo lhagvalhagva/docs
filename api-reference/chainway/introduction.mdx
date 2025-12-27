@@ -1,0 +1,73 @@
+---
+title: "Chainway API Introduction"
+description: "ZPL Linux SDK REST API - HM-T300 PRO принтерт зориулсан REST API"
+---
+
+## Overview
+
+Chainway API нь ZPL Linux SDK-г Docker орчинд REST API болгон ажиллуулах систем юм. Энэ API нь HM-T300 PRO принтертэй холбогдож RFID бичих, шошго хэвлэх зэрэг үйлдлүүдийг гүйцэтгэх боломжийг олгодог.
+
+## Base URL
+
+```
+http://localhost:5001
+```
+
+## Response Format
+
+Бүх API endpoint-ууд JSON форматтай хариу буцаадаг:
+
+```json
+{
+  "success": true,
+  "message": "Амжилттай"
+}
+```
+
+Алдаа гарвал:
+
+```json
+{
+  "error": "Алдааны мэдээлэл"
+}
+```
+
+## Status Codes
+
+- `200` - Амжилттай
+- `400` - Буруу хүсэлт
+- `500` - Серверийн алдаа
+
+## Quick Start
+
+1. **Docker container эхлүүлэх:**
+```bash
+cd ZPL_LinuxSDK_V1.4.0.2
+docker-compose up -d
+```
+
+2. **Health check:**
+```bash
+curl http://localhost:5001/health
+```
+
+3. **RFID бичих:**
+```bash
+curl -X POST http://localhost:5001/rfid/write \
+  -H "Content-Type: application/json" \
+  -d '{
+    "printer_ip": "192.168.13.115",
+    "epc_data": "303400ABCDEF123456789012"
+  }'
+```
+
+## Supported Operations
+
+- **RFID Operations**: Бичих
+- **Label Printing**: Шошго хэвлэх (ZPL командаар эсвэл зураг файлаар)
+
+## Requirements
+
+- Docker installed
+- Network access to printer (TCP 9100)
+- HM-T300 PRO принтер

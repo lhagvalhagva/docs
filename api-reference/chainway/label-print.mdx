@@ -1,0 +1,109 @@
+---
+title: "Label Print"
+description: "Шошго хэвлэх - ZPL командаар эсвэл зураг файлаар"
+api: "POST /label/print"
+---
+
+## Request
+
+<RequestExample>
+
+```bash
+curl -X POST http://localhost:5001/label/print \
+  -H "Content-Type: application/json" \
+  -d '{
+    "printer_ip": "192.168.13.115",
+    "product_name": "Барааны нэр",
+    "barcode": "1234567890123",
+    "price": "50000",
+    "size": "XL",
+    "default_code": "PROD001",
+    "rfid": "303400ABCDEF123456789012"
+  }'
+```
+
+</RequestExample>
+
+## Parameters
+
+<ParamField body="printer_ip" type="string" optional>
+  Принтерийн IP хаяг. Default: "192.168.13.115"
+</ParamField>
+
+<ParamField body="product_name" type="string" required>
+  Барааны нэр
+</ParamField>
+
+<ParamField body="barcode" type="string" required>
+  Баркод дугаар
+</ParamField>
+
+<ParamField body="price" type="string" optional>
+  Үнэ (MNT)
+</ParamField>
+
+<ParamField body="size" type="string" optional>
+  Хэмжээ
+</ParamField>
+
+<ParamField body="default_code" type="string" optional>
+  Барааны код
+</ParamField>
+
+<ParamField body="rfid" type="string" optional>
+  RFID EPC өгөгдөл (hex string). Хэрэв өгсөн бол RFID tag дээр бичигдэнэ
+</ParamField>
+
+<ParamField body="image_name" type="string" optional>
+  Зургийн файлын зам (Docker container дотор). Хэрэв өгсөн бол ZPL командыг ашиглахгүй
+</ParamField>
+
+<ParamField body="width" type="number" optional>
+  Шошгоны өргөн (инч). Default: 2.8
+</ParamField>
+
+<ParamField body="height" type="number" optional>
+  Шошгоны өндөр (инч). Default: 1.9
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Хариуны мэдээлэл
+</ResponseField>
+
+<ResponseExample>
+
+```json Success Response
+{
+  "success": true,
+  "message": "Шошго амжилттай хэвлэгдлээ"
+}
+```
+
+```json Error Response - Missing Required Fields
+{
+  "error": "product_name болон barcode шаардлагатай"
+}
+```
+
+```json Error Response - Print Failed
+{
+  "error": "PrintImage failed: {...}"
+}
+```
+
+</ResponseExample>
+
+## Notes
+
+- `product_name` болон `barcode` шаардлагатай талбар
+- Хэрэв `image_name` өгсөн бол ZPL командыг ашиглахгүй, зургийг шууд хэвлэнэ
+- Хэрэв `rfid` өгсөн бол RFID tag дээр бичигдэнэ
+- ZPL командыг Labelary API ашиглан зураг болгон хөрвүүлнэ
+- Монгол үсгийг ASCII руу хөрвүүлнэ (Ү→V, ү→v, Ө→e, ө→e)
+

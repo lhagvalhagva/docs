@@ -1,0 +1,79 @@
+---
+title: "RFID Write"
+description: "RFID tag дээр өгөгдөл бичих"
+api: "POST /rfid/write"
+---
+
+## Request
+
+<RequestExample>
+
+```bash
+curl -X POST http://localhost:5001/rfid/write \
+  -H "Content-Type: application/json" \
+  -d '{
+    "printer_ip": "192.168.13.115",
+    "epc_data": "303400ABCDEF123456789012"
+  }'
+```
+
+</RequestExample>
+
+## Parameters
+
+<ParamField body="printer_ip" type="string" optional>
+  Принтерийн IP хаяг. Default: "192.168.13.115"
+</ParamField>
+
+<ParamField body="epc_data" type="string" required>
+  RFID EPC өгөгдөл (hex string). Жишээ: "303400ABCDEF123456789012"
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Амжилттай эсэх
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Хариуны мэдээлэл
+</ResponseField>
+
+<ResponseField name="epc_data" type="string">
+  Бичсэн EPC өгөгдөл
+</ResponseField>
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "message": "RFID бичигдлээ",
+  "epc_data": "303400ABCDEF123456789012"
+}
+```
+
+## Error Responses
+
+### Missing EPC Data
+
+```json
+{
+  "error": "epc_data шаардлагатай"
+}
+```
+
+### Printer Connection Failed
+
+```json
+{
+  "error": "PortOpen failed: 1001 - Connection timeout"
+}
+```
+
+## Notes
+
+- EPC data нь hex string байх ёстой (тэгш тооны тэмдэгт)
+- Бичих үед принтер RFID tag-тэй холбогдож байх ёстой
+- Бичих хугацаа ~2-5 секунд
+
