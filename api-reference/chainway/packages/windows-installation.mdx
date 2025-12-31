@@ -36,6 +36,7 @@ description: "Windows дээр Chainway ZPL API суулгах заавар"
    - Docker image ачаалах
    - Startup/Stop скриптүүд үүсгэх
    - Service эхлүүлэх
+   - **Task Scheduler автоматаар үүсгэх** (Windows login хийхэд автоматаар эхлүүлэх)
 
 3. **Ажиллаж байгаа эсэхийг шалгах:**
    ```powershell
@@ -75,16 +76,24 @@ docker-compose logs -f  # Лог харах
 
 ## Автоматаар эхлүүлэх (Task Scheduler)
 
-Windows login хийхэд автоматаар эхлүүлэх:
+Installer нь **автоматаар Task Scheduler үүсгэдэг**. Windows login хийхэд ZPL API автоматаар эхлэнэ.
 
+### Task Scheduler удирдах
+
+Устгах:
+```powershell
+schtasks /delete /tn "ZPL-API" /f
+```
+
+Дахин үүсгэх (хэрэв шаардлагатай бол):
 ```powershell
 # PowerShell-г Administrator эрхтэйгээр нээх
 schtasks /create /tn "ZPL-API" /tr "C:\Users\YourUsername\.zpl-api\start.bat" /sc onlogon
 ```
 
-Устгах:
+Статус шалгах:
 ```powershell
-schtasks /delete /tn "ZPL-API" /f
+schtasks /query /tn "ZPL-API"
 ```
 
 ## API ашиглах
@@ -194,5 +203,6 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 - Docker Desktop нь login хийхэд автоматаар эхлэх тохиргоотой байх ёстой
 - WSL 2 backend ашиглах нь зөвлөмж (Docker Desktop settings)
-- Administrator эрх шаардлагатай (installer, Task Scheduler)
+- **Task Scheduler автоматаар үүсгэгдэнэ** - Windows login хийхэд ZPL API автоматаар эхлэнэ
+- Administrator эрх шаардлагатай (installer, Task Scheduler үүсгэхэд)
 
