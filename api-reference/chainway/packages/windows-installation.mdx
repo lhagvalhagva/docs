@@ -1,0 +1,198 @@
+---
+title: "Windows Installation"
+description: "Windows дээр Chainway ZPL API суулгах заавар"
+---
+
+## Шаардлага
+
+- Windows 10/11
+- Docker Desktop for Windows суулгасан байх
+  - https://www.docker.com/products/docker-desktop
+  - WSL 2 backend ашиглах (зөвлөмж)
+- PowerShell (Windows дээр default байна)
+
+## Суулгалт
+
+### Арга 1: PowerShell Script (Зөвлөмж)
+
+1. **Package задлах:**
+   ```powershell
+   # tar.gz файлыг 7-Zip эсвэл WinRAR ашиглан задлах
+   # Эсвэл WSL/Git Bash ашиглах:
+   tar -xzf zpl-api-windows-*.tar.gz
+   cd zpl-api-windows-*
+   ```
+
+2. **Installer ажиллуулах:**
+   ```powershell
+   # PowerShell-г Administrator эрхтэйгээр нээх
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   .\install.ps1
+   ```
+
+   Installer нь дараах зүйлсийг хийх болно:
+   - Docker шалгах
+   - Суулгалтын хавтас үүсгэх (`%USERPROFILE%\.zpl-api`)
+   - Docker image ачаалах
+   - Startup/Stop скриптүүд үүсгэх
+   - Service эхлүүлэх
+
+3. **Ажиллаж байгаа эсэхийг шалгах:**
+   ```powershell
+   curl http://localhost:5001/health
+   ```
+
+### Арга 2: Manual (Docker Compose)
+
+1. **Package задлах**
+
+2. **Docker Compose ажиллуулах:**
+   ```cmd
+   cd zpl-api-windows-*
+   docker-compose up -d
+   ```
+
+## Service удирдах
+
+### Start/Stop Scripts
+
+```cmd
+# Эхлүүлэх
+C:\Users\YourUsername\.zpl-api\start.bat
+
+# Зогсоох
+C:\Users\YourUsername\.zpl-api\stop.bat
+```
+
+### Docker Compose
+
+```cmd
+cd C:\Users\YourUsername\.zpl-api
+docker-compose up -d    # Эхлүүлэх
+docker-compose down     # Зогсоох
+docker-compose logs -f  # Лог харах
+```
+
+## Автоматаар эхлүүлэх (Task Scheduler)
+
+Windows login хийхэд автоматаар эхлүүлэх:
+
+```powershell
+# PowerShell-г Administrator эрхтэйгээр нээх
+schtasks /create /tn "ZPL-API" /tr "C:\Users\YourUsername\.zpl-api\start.bat" /sc onlogon
+```
+
+Устгах:
+```powershell
+schtasks /delete /tn "ZPL-API" /f
+```
+
+## API ашиглах
+
+### Health Check
+
+```powershell
+curl http://localhost:5001/health
+```
+
+### RFID бичих
+
+```powershell
+curl -X POST http://localhost:5001/rfid/write `
+  -H "Content-Type: application/json" `
+  -d '{\"printer_ip\":\"192.168.13.115\",\"epc_data\":\"303400ABCDEF123456789012\"}'
+```
+
+### Шошго хэвлэх
+
+```powershell
+curl -X POST http://localhost:5001/label/print `
+  -H "Content-Type: application/json" `
+  -d '{\"printer_ip\":\"192.168.13.115\",\"product_name\":\"Test\",\"barcode\":\"123456789012\",\"price\":\"10000\",\"size\":\"XL\",\"default_code\":\"ABC123\"}'
+```
+
+## Тохиргоо
+
+### Принтерийн IP хаяг солих
+
+API request-д `printer_ip` параметр өгөх эсвэл default утгыг өөрчлөх.
+
+### Порт солих
+
+`%USERPROFILE%\.zpl-api\docker-compose.yml` файлд `ports:` мөрийг өөрчлөх:
+
+```yaml
+ports:
+  - "5001:5000"  # Хүссэн порт:5000
+```
+
+## Устгах
+
+```powershell
+# PowerShell-г Administrator эрхтэйгээр нээх
+cd zpl-api-windows-*
+.\uninstall.ps1
+```
+
+Эсвэл manual:
+
+```powershell
+# Task Scheduler устгах (хэрэв байвал)
+schtasks /delete /tn "ZPL-API" /f
+
+# Docker container зогсоох
+cd $env:USERPROFILE\.zpl-api
+docker-compose down
+
+# Суулгалтын хавтас устгах
+Remove-Item -Recurse -Force $env:USERPROFILE\.zpl-api
+```
+
+## Асуудал засах
+
+### Docker ажиллахгүй байвал
+
+- Docker Desktop эхлүүлсэн эсэхийг шалгах
+- WSL 2 суулгасан эсэхийг шалгах (Docker Desktop settings)
+- Docker Desktop restart хийх
+
+### Service эхлэхгүй байвал
+
+```cmd
+cd C:\Users\YourUsername\.zpl-api
+docker-compose logs
+```
+
+### Docker image ачааллаагүй байвал
+
+```powershell
+cd $env:USERPROFILE\.zpl-api
+Get-Content zpl-api-image.tar.gz | docker load
+```
+
+### Принтерт хүрэхгүй байвал
+
+- Принтер PC-тай ижил сүлжээнд байгаа эсэхийг шалгах
+- Принтерийн IP хаяг зөв эсэхийг шалгах (default: 192.168.13.115)
+- Windows Firewall тохиргоо шалгах
+- Network connectivity шалгах: `ping 192.168.13.115`
+
+### PowerShell execution policy алдаа
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+## Байршил
+
+- **Суулгалтын хавтас**: `%USERPROFILE%\.zpl-api` (C:\Users\YourUsername\.zpl-api)
+- **Лог файлууд**: Docker logs ашиглах (`docker-compose logs`)
+- **Docker Compose**: `%USERPROFILE%\.zpl-api\docker-compose.yml`
+- **Start/Stop скриптүүд**: `%USERPROFILE%\.zpl-api\start.bat`, `stop.bat`
+
+## Анхаарах зүйл
+
+- Docker Desktop нь login хийхэд автоматаар эхлэх тохиргоотой байх ёстой
+- WSL 2 backend ашиглах нь зөвлөмж (Docker Desktop settings)
+- Administrator эрх шаардлагатай (installer, Task Scheduler)
+

@@ -1,0 +1,202 @@
+---
+title: "macOS Installation"
+description: "macOS дээр Chainway ZPL API суулгах заавар"
+---
+
+## Шаардлага
+
+- macOS (10.15+)
+- Docker Desktop суулгасан байх
+  - https://www.docker.com/products/docker-desktop
+- Docker Desktop ажиллаж байгаа байх
+
+## Хурдан эхлүүлэх (3 алхам)
+
+### 1. Package задлах
+
+```bash
+tar -xzf zpl-api-macos-*.tar.gz
+cd zpl-api-macos-*
+```
+
+### 2. Installer ажиллуулах
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+Installer нь дараах зүйлсийг хийх болно:
+- Docker шалгах
+- Суулгалтын хавтас үүсгэх (`~/.zpl-api`)
+- Docker image ачаалах
+- macOS LaunchAgent service суулгах
+- Service эхлүүлэх
+
+### 3. Ажиллаж байгаа эсэхийг шалгах
+
+```bash
+curl http://localhost:5001/health
+```
+
+Хариу: `{"status":"ok","message":"ZPL API ажиллаж байна"}` гэж гарвал амжилттай!
+
+## Service удирдах
+
+### Зогсоох
+
+```bash
+launchctl stop com.mw.zpl-api
+```
+
+### Эхлүүлэх
+
+```bash
+launchctl start com.mw.zpl-api
+```
+
+### Статус шалгах
+
+```bash
+launchctl list | grep zpl-api
+```
+
+### Service устгах (unload)
+
+```bash
+launchctl unload ~/Library/LaunchAgents/com.mw.zpl-api.plist
+```
+
+## Лог харах
+
+### Application лог
+
+```bash
+tail -f ~/.zpl-api/logs/zpl-api.log
+```
+
+### Error лог
+
+```bash
+tail -f ~/.zpl-api/logs/zpl-api.error.log
+```
+
+### Docker logs
+
+```bash
+cd ~/.zpl-api
+docker-compose logs -f
+```
+
+## API ашиглах
+
+### Health Check
+
+```bash
+curl http://localhost:5001/health
+```
+
+### RFID бичих
+
+```bash
+curl -X POST http://localhost:5001/rfid/write \
+  -H "Content-Type: application/json" \
+  -d '{
+    "printer_ip": "192.168.13.115",
+    "epc_data": "303400ABCDEF123456789012"
+  }'
+```
+
+### Шошго хэвлэх
+
+```bash
+curl -X POST http://localhost:5001/label/print \
+  -H "Content-Type: application/json" \
+  -d '{
+    "printer_ip": "192.168.13.115",
+    "product_name": "Бүтээгдэхүүн",
+    "barcode": "123456789012",
+    "price": "10000",
+    "size": "XL",
+    "default_code": "ABC123"
+  }'
+```
+
+## Тохиргоо
+
+### Принтерийн IP хаяг солих
+
+API request-д `printer_ip` параметр өгөх эсвэл default утгыг өөрчлөх.
+
+### Порт солих
+
+`~/.zpl-api/docker-compose.yml` файлд `ports:` мөрийг өөрчлөх:
+
+```yaml
+ports:
+  - "5001:5000"  # Хүссэн порт:5000
+```
+
+## Устгах
+
+```bash
+cd zpl-api-macos-*
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+Эсвэл manual:
+
+```bash
+# Service устгах
+launchctl unload ~/Library/LaunchAgents/com.mw.zpl-api.plist
+rm ~/Library/LaunchAgents/com.mw.zpl-api.plist
+
+# Docker container зогсоох
+cd ~/.zpl-api
+docker-compose down
+
+# Суулгалтын хавтас устгах
+rm -rf ~/.zpl-api
+```
+
+## Асуудал засах
+
+### Service эхлэхгүй байвал
+
+```bash
+# Статус шалгах
+launchctl list | grep zpl-api
+
+# Лог шалгах
+tail -f ~/.zpl-api/logs/zpl-api.error.log
+
+# Docker Desktop ажиллаж байгаа эсэхийг шалгах
+docker info
+```
+
+### Docker image ачааллаагүй байвал
+
+```bash
+cd ~/.zpl-api
+docker load < zpl-api-image.tar.gz
+```
+
+### Принтерт хүрэхгүй байвал
+
+- Принтер Mac-тай ижил сүлжээнд байгаа эсэхийг шалгах
+- Принтерийн IP хаяг зөв эсэхийг шалгах (default: 192.168.13.115)
+- Firewall тохиргоо шалгах
+- Network connectivity шалгах: `ping 192.168.13.115`
+
+## Байршил
+
+- **Суулгалтын хавтас**: `~/.zpl-api`
+- **Service тохиргоо**: `~/Library/LaunchAgents/com.mw.zpl-api.plist`
+- **Лог файлууд**: `~/.zpl-api/logs/`
+- **Docker Compose**: `~/.zpl-api/docker-compose.yml`
+
+## Автоматаар эхлүүлэх
+
+Service нь Mac restart хийхэд автоматаар эхлэнэ (`RunAtLoad: true`). Docker Desktop нь login хийхэд автоматаар эхлэх тохиргоотой байх ёстой.
+

@@ -1,0 +1,107 @@
+---
+title: "Packages Introduction"
+description: "Chainway ZPL API-ийн хэрэглэгчид зориулсан package файлуудын танилцуулга"
+---
+
+## Overview
+
+Chainway ZPL API нь macOS болон Windows платформуудад зориулсан pre-built package файлуудыг санал болгодог. Эдгээр package файлууд нь Docker image-тэй хамт ирдэг бөгөөд source code нуугдсан байдаг.
+
+## Package файлууд
+
+### macOS Package
+- **Файл**: `zpl-api-macos-YYYYMMDD.tar.gz`
+- **Хэмжээ**: ~132 MB
+- **Байршил**: `packages/macos/`
+- **Агуулга**: 
+  - Pre-built Docker image (`zpl-api-image.tar.gz`)
+  - Installer скрипт (`install.sh`)
+  - Uninstaller скрипт (`uninstall.sh`)
+  - Docker Compose тохиргоо
+  - README файл
+
+### Windows Package
+- **Файл**: `zpl-api-windows-YYYYMMDD.zip`
+- **Хэмжээ**: ~136 MB
+- **Байршил**: `packages/windows/`
+- **Агуулга**:
+  - Pre-built Docker image (`zpl-api-image.tar.gz`)
+  - Installer скрипт (`install.ps1`)
+  - Uninstaller скрипт (`uninstall.ps1`)
+  - Docker Compose тохиргоо
+  - README файл
+
+## Package үүсгэх
+
+### macOS Package үүсгэх
+
+```bash
+cd macos
+./create_package.sh
+```
+
+Энэ нь `packages/macos/zpl-api-macos-YYYYMMDD.tar.gz` файл үүсгэнэ.
+
+### Windows Package үүсгэх
+
+```bash
+cd windows
+./create_package_windows.sh
+```
+
+Энэ нь `packages/windows/zpl-api-windows-YYYYMMDD.zip` файл үүсгэнэ.
+
+## Package агуулга
+
+Package файлууд нь дараах зүйлсийг агуулна:
+
+- ✅ **Pre-built Docker image** - Source code нуугдсан
+- ✅ **Installer скрипт** - Автоматаар суулгалт
+- ✅ **Uninstaller скрипт** - Устгах
+- ✅ **Docker Compose тохиргоо** - Service удирдлага
+- ✅ **README файл** - Хэрэглэгчийн заавар
+- ❌ **Source code** - Байхгүй (Docker image дотор нуугдсан)
+- ❌ **Dockerfile** - Байхгүй (pre-built image ашиглана)
+- ❌ **Native libraries** - Docker image дотор байна
+
+## Хэрэглэгчид өгөх
+
+### macOS хэрэглэгчид
+`packages/macos/zpl-api-macos-*.tar.gz` файлыг өгнө.
+
+### Windows хэрэглэгчид
+`packages/windows/zpl-api-windows-*.zip` файлыг өгнө.
+
+## Шаардлага
+
+Хэрэглэгчид дараах зүйлс шаардлагатай:
+
+- **Docker Desktop** суулгасан байх
+- **Docker Desktop** ажиллаж байгаа байх
+- **Network access** - Принтертэй холбогдох боломж
+
+## Суулгалт
+
+Хэрэглэгчид package файлыг задлаад installer скрипт ажиллуулна:
+
+### macOS
+```bash
+tar -xzf zpl-api-macos-*.tar.gz
+cd zpl-api-macos-*
+chmod +x install.sh
+./install.sh
+```
+
+### Windows
+```powershell
+# Zip файлыг задлах
+# PowerShell-г Administrator эрхтэйгээр нээх
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+cd zpl-api-windows-*
+.\install.ps1
+```
+
+Дэлгэрэнгүй зааварчилгааг дараах хуудаснуудаас үзнэ үү:
+- [macOS Installation](/api-reference/chainway/packages/macos-installation)
+- [Windows Installation](/api-reference/chainway/packages/windows-installation)
+

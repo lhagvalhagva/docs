@@ -104,6 +104,14 @@
               "api-reference/chainway/rfid-write",
               "api-reference/chainway/label-print"
             ]
+          },
+          {
+            "group": "Packages",
+            "pages": [
+              "api-reference/chainway/packages/introduction",
+              "api-reference/chainway/packages/macos-installation",
+              "api-reference/chainway/packages/windows-installation"
+            ]
           }
         ]
       }
