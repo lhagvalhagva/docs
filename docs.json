@@ -28,6 +28,17 @@
         ]
       },
       {
+        "tab": "Checklist",
+        "groups": [
+          {
+            "group": "Хэрэглэгчийн гарын авлага",
+            "pages": [
+              "user-guide/checklist"
+            ]
+          }
+        ]
+      },
+      {
         "tab": "API reference",
         "groups": [
           {
